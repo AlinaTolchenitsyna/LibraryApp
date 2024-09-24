@@ -1,0 +1,101 @@
+﻿<Page x:Class="LibraryApp.UI.Pgs.LibrarianModule.EventLibrarianPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LibraryApp.UI.Convs"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="EventLibrarianPage" IsVisibleChanged="Page_IsVisibleChanged">
+    <Page.Resources>
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+    </Page.Resources>
+    <Grid Background="#D9ECF2">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <ListBox BorderThickness="0" x:Name="LbxEvents" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 Grid.Row="0" Background="#D9ECF2">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" Margin="10" 
+                           Orientation="Horizontal"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="500" Height="350" BorderBrush="#0E7484" 
+                            CornerRadius="15" BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="70"/>
+                            </Grid.RowDefinitions>
+                            <Border Height="220" Margin="5" VerticalAlignment="Center" >
+                                <Image>
+                                    <Image.Source>
+                                        <Binding Path="Photo" 
+                                                 Converter="{StaticResource 
+                                                 ByteArrayToImageConverter}"/>
+                                    </Image.Source>
+                                </Image>
+                            </Border>
+                            <TextBlock Panel.ZIndex="-1" >
+                                       Фото
+                                       <LineBreak/>
+                                       отсутствует
+                            </TextBlock>
+                            <StackPanel VerticalAlignment="Center"
+                                        Orientation="Vertical" Grid.Column="1">
+                                <TextBlock HorizontalAlignment="Left"
+                                           TextWrapping="Wrap" 
+                                           Text="{Binding Name}" Margin="10"/>
+                                <TextBlock HorizontalAlignment="Left"
+                                           TextWrapping="Wrap" Margin="10">
+                                    <TextBlock.Text>
+                                        <Binding 
+                                            StringFormat="dd.MM.yyyy HH:mm" 
+                                            Path="EventDateTime"/>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Margin="10" 
+                                           HorizontalAlignment="Left" 
+                                           TextWrapping="Wrap">
+                                    <TextBlock.Text>
+                                        <MultiBinding 
+                                            StringFormat="Руководитель: {0} {1} {2}">
+                                            <Binding Path="Librarian.LastName" />
+                                            <Binding Path="Librarian.FirstName" />
+                                            <Binding Path="Librarian.Patronymic" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                            <Button Grid.Row="1" Grid.ColumnSpan="2" 
+                                    HorizontalAlignment="Center" 
+                                    Template="{DynamicResource 
+                                    ButtonTemplate1}" x:Name="BtnEdit" 
+                                    Click="BtnEdit_Click" 
+                                    Content="Редактировать"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Нет результатов" Name="LblNoResults" Grid.Row="2"
+               HorizontalAlignment="Center" VerticalAlignment="Center"
+               Visibility="Hidden"/>
+        <Button Margin="15 4 0 0" Template="{DynamicResource ButtonTemplate1}" 
+                x:Name="BtnAdd" Click="BtnAdd_Click" Content="Добавить" 
+                Grid.Row="3" HorizontalAlignment="Left"/>
+        <Button Margin="0 4 15 0" Template="{DynamicResource ButtonTemplate1}" 
+                x:Name="BtnDelete" Click="BtnDelete_Click" Content="Удалить" 
+                Grid.Row="3" HorizontalAlignment="Right"/>
+    </Grid>
+</Page>

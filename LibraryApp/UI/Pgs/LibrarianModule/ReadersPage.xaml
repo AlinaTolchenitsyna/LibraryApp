@@ -1,0 +1,81 @@
+﻿<Page x:Class="LibraryApp.UI.Pgs.LibrarianModule.ReadersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LibraryApp.UI.Convs"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Title="ReadersPage">
+    <Grid Background="#D9ECF2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="15 0 0 0" Orientation="Horizontal">
+            <Label Content="Поиск по ФИО читателя:" 
+                   VerticalAlignment="Center"/>
+            <TextBox Style="{StaticResource CenteredTextBoxStyle}" Width="400"
+                     x:Name="TbxSearchName" 
+                     TextChanged="TbxSearchName_TextChanged"/>
+        </StackPanel>
+        <ListBox BorderThickness="0" x:Name="LbxReaders" Background="#D9ECF2"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 Grid.Row="1" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" Margin="10" 
+                               Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="400" Height="230" BorderBrush="#0E7484" 
+                            CornerRadius="15" BorderThickness="1">
+                        <Grid>
+                            <StackPanel VerticalAlignment="Center"
+                                        Orientation="Vertical">
+                                <TextBlock TextWrapping="Wrap" 
+                                           Text="{Binding 
+                                           StringFormat=Код читателя: {0}, 
+                                           Path=IdReader}" Margin="10" />
+                                <StackPanel Orientation="Horizontal" 
+                                            HorizontalAlignment="Center" >
+                                    <TextBlock Text="{Binding LastName}"/>
+                                    <TextBlock Text="{Binding FirstName}" 
+                                               Margin="5 0 0 0"/>
+                                    <TextBlock Text="{Binding Patronymic}" 
+                                               Margin="5 0 0 0"/>
+                                </StackPanel>
+                                <TextBlock TextWrapping="Wrap" 
+                                           Text="{Binding 
+                                           StringFormat=Телефон: {0}, 
+                                           Path=Phone}" Margin="10" />
+                                <Button Template="{DynamicResource
+                                        ButtonTemplate1}" x:Name="BtnEdit"
+                                        Width="220" Click="BtnEdit_Click" 
+                                        Content="Редактировать" />
+                                <Button Template="{DynamicResource 
+                                        ButtonTemplate1}" x:Name="BtnIssueBook" 
+                                        Width="220" Click="BtnIssueBook_Click" 
+                                        Margin="0 15 0 0" 
+                                        Content="Принять/выдать книгу"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Нет результатов" Name="LblNoResults" Grid.Row="1"
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
+               Visibility="Hidden"/>
+        <Button x:Name="BtnRegister" Width="200" Margin="15 4 0 0" 
+                Template="{DynamicResource ButtonTemplate1}" 
+                Content="Зарегистрировать" HorizontalAlignment="Left" 
+                Grid.Row="2" Click="BtnRegister_Click"/>
+        <Button x:Name="BtnDelete" Margin="0 4 15 0" 
+                Template="{DynamicResource ButtonTemplate1}" 
+                Click="BtnDelete_Click" Content="Удалить" Grid.Row="3" 
+                HorizontalAlignment="Right"/>
+    </Grid>
+</Page>

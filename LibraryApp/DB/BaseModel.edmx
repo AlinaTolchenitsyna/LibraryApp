@@ -1,0 +1,757 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище LibraryModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="IdBook" />
+          </Key>
+          <Property Name="IdBook" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IdPublishingHouse" Type="int" Nullable="false" />
+          <Property Name="PublishingYear" Type="int" Nullable="false" />
+          <Property Name="NumberOfPages" Type="int" Nullable="false" />
+          <Property Name="IdGenre" Type="int" Nullable="false" />
+          <Property Name="IdStatus" Type="int" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Checkout">
+          <Key>
+            <PropertyRef Name="IdCheckout" />
+          </Key>
+          <Property Name="IdCheckout" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdBook" Type="int" Nullable="false" />
+          <Property Name="IdReader" Type="int" Nullable="false" />
+          <Property Name="IdLibrarianCheckout" Type="int" Nullable="false" />
+          <Property Name="IdLibrarianReturn" Type="int" />
+          <Property Name="DateCheckout" Type="date" Nullable="false" />
+          <Property Name="DateReturn" Type="date" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+          </Key>
+          <Property Name="IdEvent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EventDateTime" Type="datetime" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="IdLibrarian" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventRegistration">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+            <PropertyRef Name="IdReader" />
+          </Key>
+          <Property Name="IdEvent" Type="int" Nullable="false" />
+          <Property Name="IdReader" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="IdFeedback" />
+          </Key>
+          <Property Name="IdFeedback" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdReader" Type="int" Nullable="false" />
+          <Property Name="IdBook" Type="int" Nullable="false" />
+          <Property Name="FeedbackDate" Type="date" Nullable="false" />
+          <Property Name="FeedbackText" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rating" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="IdGenre" />
+          </Key>
+          <Property Name="IdGenre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Librarian">
+          <Key>
+            <PropertyRef Name="IdLibrarian" />
+          </Key>
+          <Property Name="IdLibrarian" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PublishingHouse">
+          <Key>
+            <PropertyRef Name="IdPublishingHouse" />
+          </Key>
+          <Property Name="IdPublishingHouse" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reader">
+          <Key>
+            <PropertyRef Name="IdReader" />
+          </Key>
+          <Property Name="IdReader" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="RegistrationDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+          </Key>
+          <Property Name="IdStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Book_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="IdGenre" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_PublishingHouse">
+          <End Role="PublishingHouse" Type="Self.PublishingHouse" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublishingHouse">
+              <PropertyRef Name="IdPublishingHouse" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdPublishingHouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="IdStatus" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IdBook" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Librarian">
+          <End Role="Librarian" Type="Self.Librarian" Multiplicity="1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="IdLibrarian" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdLibrarianCheckout" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Librarian1">
+          <End Role="Librarian" Type="Self.Librarian" Multiplicity="0..1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="IdLibrarian" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdLibrarianReturn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IdReader" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Librarian">
+          <End Role="Librarian" Type="Self.Librarian" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="IdLibrarian" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="IdLibrarian" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventRegistration_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="EventRegistration" Type="Self.EventRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="EventRegistration">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EventRegistration_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="EventRegistration" Type="Self.EventRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IdReader" />
+            </Principal>
+            <Dependent Role="EventRegistration">
+              <PropertyRef Name="IdReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IdBook" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="IdBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IdReader" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="IdReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище LibraryModelContainer">
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Checkout" EntityType="Self.Checkout" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventRegistration" EntityType="Self.EventRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Librarian" EntityType="Self.Librarian" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PublishingHouse" EntityType="Self.PublishingHouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reader" EntityType="Self.Reader" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Book_Genre" Association="Self.FK_Book_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_PublishingHouse" Association="Self.FK_Book_PublishingHouse">
+            <End Role="PublishingHouse" EntitySet="PublishingHouse" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Status" Association="Self.FK_Book_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Book" Association="Self.FK_Checkout_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Librarian" Association="Self.FK_Checkout_Librarian">
+            <End Role="Librarian" EntitySet="Librarian" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Librarian1" Association="Self.FK_Checkout_Librarian1">
+            <End Role="Librarian" EntitySet="Librarian" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Reader" Association="Self.FK_Checkout_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Librarian" Association="Self.FK_Event_Librarian">
+            <End Role="Librarian" EntitySet="Librarian" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventRegistration_Event" Association="Self.FK_EventRegistration_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="EventRegistration" EntitySet="EventRegistration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EventRegistration_Reader" Association="Self.FK_EventRegistration_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="EventRegistration" EntitySet="EventRegistration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Book" Association="Self.FK_Feedback_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Reader" Association="Self.FK_Feedback_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="IdBook" />
+          </Key>
+          <Property Name="IdBook" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdPublishingHouse" Type="Int32" Nullable="false" />
+          <Property Name="PublishingYear" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfPages" Type="Int32" Nullable="false" />
+          <Property Name="IdGenre" Type="Int32" Nullable="false" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Genre" Relationship="Self.FK_Book_Genre" FromRole="Book" ToRole="Genre" />
+          <NavigationProperty Name="PublishingHouse" Relationship="Self.FK_Book_PublishingHouse" FromRole="Book" ToRole="PublishingHouse" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Book_Status" FromRole="Book" ToRole="Status" />
+          <NavigationProperty Name="Checkout" Relationship="Self.FK_Checkout_Book" FromRole="Book" ToRole="Checkout" />
+          <NavigationProperty Name="Feedback" Relationship="Self.FK_Feedback_Book" FromRole="Book" ToRole="Feedback" />
+        </EntityType>
+        <EntityType Name="Checkout">
+          <Key>
+            <PropertyRef Name="IdCheckout" />
+          </Key>
+          <Property Name="IdCheckout" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdBook" Type="Int32" Nullable="false" />
+          <Property Name="IdReader" Type="Int32" Nullable="false" />
+          <Property Name="IdLibrarianCheckout" Type="Int32" Nullable="false" />
+          <Property Name="IdLibrarianReturn" Type="Int32" />
+          <Property Name="DateCheckout" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateReturn" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Checkout_Book" FromRole="Checkout" ToRole="Book" />
+          <NavigationProperty Name="Librarian" Relationship="Self.FK_Checkout_Librarian" FromRole="Checkout" ToRole="Librarian" />
+          <NavigationProperty Name="Librarian1" Relationship="Self.FK_Checkout_Librarian1" FromRole="Checkout" ToRole="Librarian" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK_Checkout_Reader" FromRole="Checkout" ToRole="Reader" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+          </Key>
+          <Property Name="IdEvent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EventDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdLibrarian" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Librarian" Relationship="Self.FK_Event_Librarian" FromRole="Event" ToRole="Librarian" />
+          <NavigationProperty Name="Reader" Relationship="Self.EventRegistration" FromRole="Event" ToRole="Reader" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="IdFeedback" />
+          </Key>
+          <Property Name="IdFeedback" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdReader" Type="Int32" Nullable="false" />
+          <Property Name="IdBook" Type="Int32" Nullable="false" />
+          <Property Name="FeedbackDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FeedbackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rating" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Feedback_Book" FromRole="Feedback" ToRole="Book" />
+          <NavigationProperty Name="Reader" Relationship="Self.FK_Feedback_Reader" FromRole="Feedback" ToRole="Reader" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="IdGenre" />
+          </Key>
+          <Property Name="IdGenre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Genre" FromRole="Genre" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Librarian">
+          <Key>
+            <PropertyRef Name="IdLibrarian" />
+          </Key>
+          <Property Name="IdLibrarian" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Checkout" Relationship="Self.FK_Checkout_Librarian" FromRole="Librarian" ToRole="Checkout" />
+          <NavigationProperty Name="Checkout1" Relationship="Self.FK_Checkout_Librarian1" FromRole="Librarian" ToRole="Checkout" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Event_Librarian" FromRole="Librarian" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="PublishingHouse">
+          <Key>
+            <PropertyRef Name="IdPublishingHouse" />
+          </Key>
+          <Property Name="IdPublishingHouse" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_PublishingHouse" FromRole="PublishingHouse" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Reader">
+          <Key>
+            <PropertyRef Name="IdReader" />
+          </Key>
+          <Property Name="IdReader" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Checkout" Relationship="Self.FK_Checkout_Reader" FromRole="Reader" ToRole="Checkout" />
+          <NavigationProperty Name="Feedback" Relationship="Self.FK_Feedback_Reader" FromRole="Reader" ToRole="Feedback" />
+          <NavigationProperty Name="Event" Relationship="Self.EventRegistration" FromRole="Reader" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+          </Key>
+          <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Status" FromRole="Status" ToRole="Book" />
+        </EntityType>
+        <Association Name="FK_Book_Genre">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="IdGenre" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdGenre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_PublishingHouse">
+          <End Role="PublishingHouse" Type="Self.PublishingHouse" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PublishingHouse">
+              <PropertyRef Name="IdPublishingHouse" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdPublishingHouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Book_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="IdStatus" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IdBook" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="IdBook" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="IdBook" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Librarian">
+          <End Role="Librarian" Type="Self.Librarian" Multiplicity="1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="IdLibrarian" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdLibrarianCheckout" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Librarian1">
+          <End Role="Librarian" Type="Self.Librarian" Multiplicity="0..1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="IdLibrarian" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdLibrarianReturn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Checkout_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="Checkout" Type="Self.Checkout" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IdReader" />
+            </Principal>
+            <Dependent Role="Checkout">
+              <PropertyRef Name="IdReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Librarian">
+          <End Role="Librarian" Type="Self.Librarian" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Librarian">
+              <PropertyRef Name="IdLibrarian" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="IdLibrarian" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Reader">
+          <End Role="Reader" Type="Self.Reader" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reader">
+              <PropertyRef Name="IdReader" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="IdReader" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventRegistration">
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <End Role="Reader" Type="Self.Reader" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="LibraryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Book" EntityType="Self.Book" />
+          <EntitySet Name="Checkout" EntityType="Self.Checkout" />
+          <EntitySet Name="Event" EntityType="Self.Event" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" />
+          <EntitySet Name="Librarian" EntityType="Self.Librarian" />
+          <EntitySet Name="PublishingHouse" EntityType="Self.PublishingHouse" />
+          <EntitySet Name="Reader" EntityType="Self.Reader" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <AssociationSet Name="FK_Book_Genre" Association="Self.FK_Book_Genre">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_PublishingHouse" Association="Self.FK_Book_PublishingHouse">
+            <End Role="PublishingHouse" EntitySet="PublishingHouse" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Status" Association="Self.FK_Book_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Book" Association="Self.FK_Checkout_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Book" Association="Self.FK_Feedback_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Librarian" Association="Self.FK_Checkout_Librarian">
+            <End Role="Librarian" EntitySet="Librarian" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Librarian1" Association="Self.FK_Checkout_Librarian1">
+            <End Role="Librarian" EntitySet="Librarian" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Checkout_Reader" Association="Self.FK_Checkout_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Checkout" EntitySet="Checkout" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Librarian" Association="Self.FK_Event_Librarian">
+            <End Role="Librarian" EntitySet="Librarian" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Reader" Association="Self.FK_Feedback_Reader">
+            <End Role="Reader" EntitySet="Reader" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="EventRegistration" Association="Self.EventRegistration">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Reader" EntitySet="Reader" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище LibraryModelContainer" CdmEntityContainer="LibraryEntities">
+          <EntitySetMapping Name="Book">
+            <EntityTypeMapping TypeName="LibraryModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="IdPublishingHouse" ColumnName="IdPublishingHouse" />
+                <ScalarProperty Name="PublishingYear" ColumnName="PublishingYear" />
+                <ScalarProperty Name="NumberOfPages" ColumnName="NumberOfPages" />
+                <ScalarProperty Name="IdGenre" ColumnName="IdGenre" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Checkout">
+            <EntityTypeMapping TypeName="LibraryModel.Checkout">
+              <MappingFragment StoreEntitySet="Checkout">
+                <ScalarProperty Name="IdCheckout" ColumnName="IdCheckout" />
+                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
+                <ScalarProperty Name="IdReader" ColumnName="IdReader" />
+                <ScalarProperty Name="IdLibrarianCheckout" ColumnName="IdLibrarianCheckout" />
+                <ScalarProperty Name="IdLibrarianReturn" ColumnName="IdLibrarianReturn" />
+                <ScalarProperty Name="DateCheckout" ColumnName="DateCheckout" />
+                <ScalarProperty Name="DateReturn" ColumnName="DateReturn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Event">
+            <EntityTypeMapping TypeName="LibraryModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="IdLibrarian" ColumnName="IdLibrarian" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedback">
+            <EntityTypeMapping TypeName="LibraryModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="IdFeedback" ColumnName="IdFeedback" />
+                <ScalarProperty Name="IdReader" ColumnName="IdReader" />
+                <ScalarProperty Name="IdBook" ColumnName="IdBook" />
+                <ScalarProperty Name="FeedbackDate" ColumnName="FeedbackDate" />
+                <ScalarProperty Name="FeedbackText" ColumnName="FeedbackText" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genre">
+            <EntityTypeMapping TypeName="LibraryModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="IdGenre" ColumnName="IdGenre" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Librarian">
+            <EntityTypeMapping TypeName="LibraryModel.Librarian">
+              <MappingFragment StoreEntitySet="Librarian">
+                <ScalarProperty Name="IdLibrarian" ColumnName="IdLibrarian" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PublishingHouse">
+            <EntityTypeMapping TypeName="LibraryModel.PublishingHouse">
+              <MappingFragment StoreEntitySet="PublishingHouse">
+                <ScalarProperty Name="IdPublishingHouse" ColumnName="IdPublishingHouse" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reader">
+            <EntityTypeMapping TypeName="LibraryModel.Reader">
+              <MappingFragment StoreEntitySet="Reader">
+                <ScalarProperty Name="IdReader" ColumnName="IdReader" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="LibraryModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="EventRegistration" TypeName="LibraryModel.EventRegistration" StoreEntitySet="EventRegistration">
+            <EndProperty Name="Event">
+              <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+            </EndProperty>
+            <EndProperty Name="Reader">
+              <ScalarProperty Name="IdReader" ColumnName="IdReader" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

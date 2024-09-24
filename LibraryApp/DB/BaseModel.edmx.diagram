@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="03ac1d59b07141138ea701e187f93660" Name="Diagram1">
+        <EntityTypeShape EntityType="LibraryModel.Book" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Checkout" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Event" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Feedback" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Genre" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Librarian" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.PublishingHouse" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Reader" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryModel.Status" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="LibraryModel.FK_Book_Genre" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Book_PublishingHouse" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Book_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Checkout_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Feedback_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Checkout_Librarian" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Checkout_Librarian1" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Checkout_Reader" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Event_Librarian" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.FK_Feedback_Reader" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryModel.EventRegistration" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

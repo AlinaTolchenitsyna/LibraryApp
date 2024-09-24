@@ -1,0 +1,38 @@
+﻿<Window x:Class="LibraryApp.UI.Wnds.ReaderMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LibraryApp.UI.Wnds"
+        mc:Ignorable="d"
+        Title="Модуль читателя" Height="450" Width="800" MinHeight="700" 
+        MinWidth="1510" WindowState="Maximized" Icon="/Resources/Logo.png">
+    <Grid Background="#D9ECF2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="#87C8D4" >
+            <Image Margin="15 15 15 15" Source="/Resources/Logo.png" 
+                   Stretch="Fill" />
+            <ListBox  Margin="15 0 15 0" BorderBrush="Transparent" 
+                      Background="#87C8D4" x:Name="NavigationListBox" 
+                      SelectionChanged="NavigationListBox_SelectionChanged" >
+                <ListBoxItem Style="{DynamicResource ListBoxItemStyle1}" 
+                             Content="Книги"/>
+                <ListBoxItem Style="{DynamicResource ListBoxItemStyle1}" 
+                             Content="Мероприятия"/>
+                <ListBoxItem Style="{DynamicResource ListBoxItemStyle1}" 
+                             Content="Моя история"/>
+                <ListBoxItem Style="{DynamicResource ListBoxItemStyle1}" 
+                             Content="Рекомендации"/>
+            </ListBox>
+        </StackPanel>
+        <Button Template="{DynamicResource ButtonTemplate1}" x:Name="BtnExit"
+                Content="Выйти" Click="BtnExit_Click" 
+                VerticalAlignment="Bottom" Margin="0 0 0 12"/>
+        <Frame NavigationUIVisibility="Hidden" x:Name="ContentFrame" 
+               Grid.Column="1"/>
+        <TextBlock Panel.ZIndex="-1" x:Name="tbkChoosePage" Text="Выберите страницу слева!" Grid.Column="1"/>
+    </Grid>
+</Window>
