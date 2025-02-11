@@ -1,0 +1,88 @@
+﻿<Page x:Class="LibraryApp.UI.Pgs.LibrarianModule.AddEditBookPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LibraryApp.UI.Convs"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditBookPage">
+    <Page.Resources>
+        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="75"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" HorizontalAlignment="Left" 
+                Template="{DynamicResource ButtonTemplate1}" Margin="15 0 0 0"
+                Content="Назад" x:Name="BtnBack" Click="BtnBack_Click" />
+        <Image Grid.RowSpan="6" Grid.Row="1" Margin="15 15 0 0" 
+               Stretch="Uniform" x:Name="BookImage">
+            <Image.Source>
+                <Binding Path="Photo" 
+                         Converter="{StaticResource 
+                         ByteArrayToImageConverter}"/>
+            </Image.Source>
+        </Image>
+        <Label Content="Фото отсутствует" Grid.Row="4" Panel.ZIndex="-1" HorizontalAlignment="Center"/>
+        <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
+                   Text="Добавление / редактирование книги"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Название" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="Автор" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="Издательство" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="Год издательства" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="Количество страниц" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" Text="Жанр" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBox Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="1"
+                 Margin="0 0 15 0" Grid.Column="2" HorizontalAlignment="Left" 
+                 x:Name="TbxName" Text="{Binding Name}" Width="500"/>
+        <TextBox Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="2" 
+                 Margin="0 0 15 0" Grid.Column="2" HorizontalAlignment="Left" 
+                 x:Name="TbxAuthor" Text="{Binding Author}" Width="500"/>
+        <ComboBox  Template="{DynamicResource ComboBoxTemplate1}"  Grid.Row="3" 
+                   Margin="0 0 15 0" Grid.Column="2" HorizontalAlignment="Left" 
+                   x:Name="CbPublishingHouse" DisplayMemberPath="Name" 
+                   Width="500" SelectedItem="{Binding PublishingHouse}"/>
+        <TextBox Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="4" 
+                 Margin="0 0 15 0" Grid.Column="2" HorizontalAlignment="Left" 
+                 x:Name="TbxYear" Text="{Binding PublishingYear}" Width="500"/>
+        <TextBox Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="5" 
+                 Margin="0 0 15 0" Grid.Column="2" HorizontalAlignment="Left" 
+                 x:Name="TbxPages" Text="{Binding NumberOfPages}" Width="500"/>
+        <ComboBox Template="{DynamicResource ComboBoxTemplate1}" Grid.Row="6" 
+                  Margin="0 0 15 0" Grid.Column="2" HorizontalAlignment="Left" 
+                  x:Name="CbGenre" DisplayMemberPath="Name" Width="500" 
+                  SelectedItem="{Binding Genre}"/>
+        <Button Grid.Row="8" VerticalAlignment="Bottom" 
+                Template="{DynamicResource ButtonTemplate1}" Margin="15 0 0 10"
+                Content="Прикрепить фото" x:Name="BtnImage" 
+                Click="BtnImage_Click" HorizontalAlignment="Left"/>
+        <Button Grid.Row="8" VerticalAlignment="Bottom" 
+                Template="{DynamicResource ButtonTemplate1}" Margin="0 0 0 10" 
+                Content="Удалить фото" x:Name="BtnDeleteImage" 
+                Click="BtnDeleteImage_Click" HorizontalAlignment="Right"/>
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="1" 
+                Grid.ColumnSpan="2" VerticalAlignment="Bottom" 
+                Margin="0 0 0 10" Grid.Row="8" x:Name="BtnSave" 
+                Content="Сохранить" Click="BtnSave_Click"/>
+    </Grid>
+</Page>

@@ -1,0 +1,64 @@
+﻿<Page x:Class="LibraryApp.UI.Pgs.LibrarianModule.AddEditReaderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddEditReaderPage" IsVisibleChanged="Page_IsVisibleChanged" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" VerticalAlignment="Center" 
+                HorizontalAlignment="Left" 
+                Template="{DynamicResource ButtonTemplate1}" Margin="15 0 0 0" 
+                Content="Назад" x:Name="BtnBack" Click="BtnBack_Click" />
+        <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" 
+                   Text="Регистрация / редактирование читателя"/>
+        <TextBlock Text="Фамилия" Grid.Row="1" HorizontalAlignment="Right" 
+                   Margin="0 0 15 0"/>
+        <TextBlock Text="Имя" Grid.Row="2" HorizontalAlignment="Right" 
+                   Margin="0 0 15 0"/>
+        <TextBlock Text="Отчество" Grid.Row="3" HorizontalAlignment="Right" 
+                   Margin="0 0 15 0"/>
+        <TextBlock Text="Дата рождения" Grid.Row="4" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBlock Text="Телефон" Grid.Row="5" HorizontalAlignment="Right" 
+                   Margin="0 0 15 0"/>
+        <TextBlock Text="Дата регистрации" Grid.Row="6" 
+                   HorizontalAlignment="Right" Margin="0 0 15 0"/>
+        <TextBox Text="{Binding LastName}" 
+                 Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="1" 
+                 Grid.Column="1" HorizontalAlignment="Left"/>
+        <TextBox Text="{Binding FirstName}" 
+                 Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="2" 
+                 Grid.Column="1" HorizontalAlignment="Left"/>
+        <TextBox Text="{Binding Patronymic}" 
+                 Style="{StaticResource CenteredTextBoxStyle}" Grid.Row="3" 
+                 Grid.Column="1" HorizontalAlignment="Left"/>
+        <DatePicker Template="{DynamicResource DatePickerTemplate1}" 
+                    Text="{Binding Birthday, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" 
+                    HorizontalAlignment="Left" x:Name="DpBirthday"/>
+        <TextBox Style="{StaticResource CenteredTextBoxStyle}" 
+                 Text="{Binding Phone}" Grid.Row="5" Grid.Column="1" 
+                 HorizontalAlignment="Left"/>
+        <DatePicker Template="{DynamicResource DatePickerTemplate1}" 
+                    Text="{Binding RegistrationDate, Mode=TwoWay}" x:Name="DpRegDate" 
+                    Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left"/>
+        <Button Template="{DynamicResource ButtonTemplate1}" 
+                Grid.ColumnSpan="2" Grid.Row="7" x:Name="BtnSave" 
+                Content="Сохранить" Click="BtnSave_Click"/>
+    </Grid> 
+</Page>
